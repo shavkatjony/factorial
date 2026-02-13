@@ -3,1818 +3,2733 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shavkatjon Yuldashev | Data Scientist</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Shavkatjon Yuldashev — Data Scientist & ML Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Exo+2:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
+        :root {
+            --void: #1a1a1a;
+            --void-light: #2a2a2a;
+            --void-lighter: #3a3a3a;
+            --sunshine: #FFB800;
+            --carrot: #FF8C42;
+            --beige: #E8DCC4;
+            --steel-gray: #6B7280;
+            --warm-gray: #9CA3AF;
+            --light-gray: #D1D5DB;
+            --accent-yellow: #FCD34D;
+            --text-primary: #F9FAFB;
+            --text-secondary: #D1D5DB;
+            --glass: rgba(255, 184, 0, 0.05);
+            --glass-border: rgba(255, 184, 0, 0.15);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --void-black: #050505;
-            --industrial-grey: #E5E5E5;
-            --glyph-cyan: #00F5FF;
-            --glyph-white: #FFFFFF;
-        }
-
         body {
-            font-family: 'JetBrains Mono', monospace;
-            background-attachment: fixed;
-            background-size: 40px 40px;
-            transition: background-color 0.3s ease;
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--void);
+            color: var(--text-primary);
             overflow-x: hidden;
-            cursor: crosshair;
         }
 
-        body.dark {
-            background-color: var(--void-black);
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-            color: white;
-        }
-
-        body.light {
-            background-color: var(--industrial-grey);
-            background-image: 
-                linear-gradient(to right, rgba(42, 42, 42, 0.15) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(42, 42, 42, 0.15) 1px, transparent 1px);
-            color: #1a1a1a;
-        }
-
-        body.dark::before {
-            content: '';
+        /* Animated Background */
+        .bg-container {
             position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background-size: 40px 40px;
-            background-position: 20px 20px;
-            pointer-events: none;
+            width: 100%;
+            height: 100%;
             z-index: 0;
-            background-image: 
-                repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(255, 255, 255, 0.2) 19px, rgba(255, 255, 255, 0.2) 21px, transparent 21px, transparent 40px),
-                repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(255, 255, 255, 0.2) 19px, rgba(255, 255, 255, 0.2) 21px, transparent 21px, transparent 40px);
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a1a 0%, #252525 100%);
         }
 
-        body.light::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-size: 40px 40px;
-            background-position: 20px 20px;
-            pointer-events: none;
-            z-index: 0;
-            background-image: 
-                repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(42, 42, 42, 0.25) 19px, rgba(42, 42, 42, 0.25) 21px, transparent 21px, transparent 40px),
-                repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(42, 42, 42, 0.25) 19px, rgba(42, 42, 42, 0.25) 21px, transparent 21px, transparent 40px);
-        }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 
-                0 8px 32px 0 rgba(0, 0, 0, 0.37),
-                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .light .glass {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(42, 42, 42, 0.15);
-            box-shadow: 
-                0 8px 32px 0 rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
-        }
-
-        .dot-matrix {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            text-shadow: 
-                0 0 1px currentColor,
-                1px 0 1px currentColor,
-                -1px 0 1px currentColor,
-                0 1px 1px currentColor,
-                0 -1px 1px currentColor;
-        }
-
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-
-        .glitch-active {
-            animation: glitch 0.2s linear 3;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-
-        @keyframes glow-pulse {
-            0%, 100% { opacity: 1; filter: brightness(1); }
-            50% { opacity: 0.8; filter: brightness(1.5); }
-        }
-
-        @keyframes rotate {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(360deg); }
-        }
-
-        .floating-graph {
-            animation: float 6s ease-in-out infinite;
+        .grid-overlay {
             position: absolute;
-            opacity: 0.3;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(rgba(255, 184, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 184, 0, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 30s linear infinite;
         }
 
-        .floating-graph svg {
-            animation: rotate 20s linear infinite;
-            transform-style: preserve-3d;
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .gradient-mesh {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 15% 20%, rgba(255, 184, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 85% 80%, rgba(255, 140, 66, 0.08) 0%, transparent 50%);
+            filter: blur(80px);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 3rem;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .sidebar-toggle {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--sunshine), var(--carrot));
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            transition: transform 0.3s;
+        }
+
+        .sidebar-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        .sidebar-toggle span {
+            width: 24px;
+            height: 3px;
+            background: var(--void);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .sidebar-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .sidebar-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        .logo {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--sunshine), var(--carrot));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-center a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-center a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--sunshine);
+            transition: width 0.3s;
+        }
+
+        .nav-center a:hover {
+            color: var(--sunshine);
+        }
+
+        .nav-center a:hover::after {
+            width: 100%;
+        }
+
+        .social-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sunshine);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background: var(--sunshine);
+            color: var(--void);
+            transform: translateY(-3px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: rgba(26, 26, 26, 0.98);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glass-border);
+            z-index: 999;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            padding: 100px 0 30px 0;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-content {
+            padding: 0 2rem;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--sunshine);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .sidebar-btn {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            text-align: left;
+            cursor: pointer;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 184, 0, 0.15), rgba(255, 140, 66, 0.15));
+            border-color: var(--sunshine);
+            transform: translateX(5px);
+        }
+
+        .sidebar-btn-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+            padding-top: 80px;
+            margin-left: 0;
+            transition: margin-left 0.4s;
+        }
+
+        main.sidebar-open {
+            margin-left: 400px;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* Hero Section */
         .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
+            flex-direction: column;
             text-align: center;
-            padding: 2rem;
-        }
-
-        .hero-name {
-            font-size: clamp(2rem, 8vw, 6rem);
-            margin-bottom: 2rem;
-            color: white;
         }
 
         .hero-title {
-            display: inline-block;
-            padding: 1rem 2rem;
+            font-family: 'Exo 2', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--sunshine) 0%, var(--carrot) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
             margin-bottom: 3rem;
         }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--glyph-cyan);
-            display: inline-block;
-            animation: glow-pulse 2s ease-in-out infinite;
-        }
-
-        .title-text {
-            font-size: clamp(0.875rem, 2vw, 1.5rem);
-            font-weight: 700;
-            letter-spacing: 0.3em;
-            color: white;
-            margin: 0 1rem;
-        }
-
-        .subtitle {
-            font-size: 0.75rem;
-            color: #999;
-            margin-top: 0.5rem;
-            letter-spacing: 0.2em;
-        }
-
-        /* Theme Toggle */
-        .theme-toggle {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.5rem;
-            border-radius: 9999px;
-        }
-
-        .theme-label {
-            font-size: 0.75rem;
-            color: #999;
-            letter-spacing: 0.2em;
-        }
-
-        .dial {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4a4a4a, #3a3a3a, #5a5a5a);
-            position: relative;
+        .btn {
+            padding: 1rem 2.2rem;
+            border: 2px solid var(--sunshine);
+            background: transparent;
+            color: var(--sunshine);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
             cursor: pointer;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease;
-        }
-
-        .dial:hover {
-            transform: scale(1.05);
-        }
-
-        .dial::before {
-            content: '';
-            position: absolute;
-            inset: 8px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #5a5a5a, #4a4a4a, #3a3a3a);
-        }
-
-        .dial::after {
-            content: '';
-            position: absolute;
-            inset: 16px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #3a3a3a, #2a2a2a, #4a4a4a);
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .dial-indicator {
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 16px;
-            background: var(--glyph-cyan);
-            box-shadow: 0 0 8px var(--glyph-cyan);
-            z-index: 10;
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .dial.rotated .dial-indicator {
-            transform: translateX(-50%) rotate(180deg);
-            transform-origin: center 28px;
-        }
-
-        .dial-icon {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 5;
-            color: var(--glyph-cyan);
-        }
-
-        /* Social Dock */
-        .social-dock {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 1000;
-            padding: 1rem 1.5rem;
-            border-radius: 9999px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .social-link {
-            color: white;
-            transition: all 0.3s ease;
-            position: relative;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .social-link:hover {
-            color: var(--glyph-cyan);
-            transform: scale(1.1);
-        }
-
-        .social-link::before {
-            content: '';
-            position: absolute;
-            inset: -8px;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--glyph-cyan) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .social-link:hover::before {
-            opacity: 0.6;
-            animation: glow-pulse 1.5s ease-in-out infinite;
-        }
-
-        /* Portfolio Section */
-        .portfolio {
-            padding: 8rem 0;
-            position: relative;
-            z-index: 10;
-        }
-
-        .portfolio-header {
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-            padding: 0 2rem;
-        }
-
-        .section-label {
+            border-radius: 8px;
+            transition: all 0.3s;
+            text-decoration: none;
             display: inline-block;
-            padding: 0.5rem 1.5rem;
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
-            color: #999;
-            letter-spacing: 0.2em;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 184, 0, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--sunshine), var(--carrot));
+            border: none;
+            color: var(--void);
+            font-weight: 600;
+        }
+
+        /* Metrics Dashboard */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 3rem;
+        }
+
+        .metric-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.8rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--sunshine), var(--carrot));
+        }
+
+        .metric-number {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--sunshine);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* System Capability Grid */
+        .capability-section {
+            width: 100%;
+            max-width: 1400px;
         }
 
         .section-title {
-            font-size: clamp(2rem, 6vw, 4rem);
-            margin-bottom: 1rem;
-            color: white;
+            font-family: 'Exo 2', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--sunshine), var(--carrot));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .section-description {
-            color: #999;
-            max-width: 600px;
-        }
-
-        .portfolio-scroll {
-            display: flex;
+        .capability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            padding: 0 2rem;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-behavior: smooth;
+            margin-bottom: 4rem;
         }
 
-        .portfolio-scroll::-webkit-scrollbar {
-            height: 12px;
+        .capability-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
         }
 
-        .portfolio-scroll::-webkit-scrollbar-track {
-            background: transparent;
+        .capability-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--sunshine);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
         }
 
-        .portfolio-scroll::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
+        .capability-list {
+            list-style: none;
         }
 
-        .portfolio-scroll::-webkit-scrollbar-thumb:hover {
-            background: var(--glyph-cyan);
+        .capability-item {
+            margin-bottom: 1.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid rgba(255, 184, 0, 0.1);
+        }
+
+        .capability-item:last-child {
+            border-bottom: none;
+        }
+
+        .tool-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .tool-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .level-badge {
+            padding: 0.2rem 0.6rem;
+            background: rgba(255, 184, 0, 0.15);
+            border: 1px solid var(--sunshine);
+            border-radius: 4px;
+            color: var(--sunshine);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        /* Radar Chart Container */
+        .radar-container {
+            max-width: 600px;
+            margin: 0 auto 4rem;
+            padding: 2rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
+
+        /* Project Cards */
+        .projects-section {
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2rem;
         }
 
         .project-card {
-            flex-shrink: 0;
-            width: 320px;
-            height: 600px;
-            border-radius: 24px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
 
         .project-card:hover {
             transform: translateY(-8px);
-            border-color: rgba(0, 245, 255, 0.3);
+            border-color: var(--sunshine);
+            box-shadow: 0 20px 40px rgba(255, 184, 0, 0.15);
         }
 
-        .card-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        .project-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255, 184, 0, 0.1), rgba(255, 140, 66, 0.1));
+            border-bottom: 1px solid var(--glass-border);
         }
 
-        .card-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            color: white;
-        }
-
-        .status-tag {
-            display: inline-flex;
-            align-items: center;
+        .project-tags {
+            display: flex;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 9999px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.75rem;
-            color: #ccc;
-        }
-
-        .status-indicator {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--glyph-cyan);
-            animation: glow-pulse 2s ease-in-out infinite;
-        }
-
-        .category {
-            margin-top: 0.75rem;
-            font-size: 0.75rem;
-            color: #666;
-            letter-spacing: 0.1em;
-        }
-
-        .card-visual {
-            height: 256px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2));
-            position: relative;
-        }
-
-        .card-visual svg {
-            filter: drop-shadow(0 0 20px rgba(0, 245, 255, 0.5));
-        }
-
-        .card-footer {
-            padding: 1.5rem;
-        }
-
-        .tech-stack {
-            margin-bottom: 1.5rem;
-        }
-
-        .tech-label {
-            font-size: 0.75rem;
-            color: #666;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.1em;
-        }
-
-        .tech-chips {
-            display: flex;
+            margin-bottom: 1rem;
             flex-wrap: wrap;
-            gap: 0.5rem;
         }
 
-        .tech-chip {
-            padding: 0.25rem 0.75rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            font-size: 0.75rem;
-            color: #ccc;
-        }
-
-        .metrics {
-            margin-bottom: 1.5rem;
-        }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-            text-align: center;
-        }
-
-        .metric-value {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--glyph-cyan);
-        }
-
-        .metric-label {
-            font-size: 0.625rem;
-            color: #666;
+        .tag {
+            padding: 0.3rem 0.7rem;
+            background: rgba(255, 184, 0, 0.2);
+            border: 1px solid var(--sunshine);
+            border-radius: 6px;
+            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
+            color: var(--sunshine);
         }
 
-        .action-button {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .action-button:hover {
-            border-color: rgba(0, 245, 255, 0.5);
-            background: rgba(0, 245, 255, 0.1);
-        }
-
-        .button-text {
-            font-size: 0.875rem;
-            color: white;
-            letter-spacing: 0.1em;
-        }
-
-        .toggle-switch {
-            width: 48px;
-            height: 24px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 9999px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-knob {
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            width: 16px;
-            height: 16px;
-            background: var(--glyph-cyan);
-            border-radius: 50%;
-            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .action-button:hover .toggle-knob {
-            transform: translateX(24px);
-        }
-    </style>
-</head>
-<body class="dark">
-    <!-- Theme Toggle -->
-    <div class="theme-toggle glass">
-        <span class="theme-label">MODE</span>
-        <div class="dial" onclick="toggleTheme()">
-            <div class="dial-indicator"></div>
-            <div class="dial-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="4"/>
-                    <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/>
-                </svg>
-            </div>
-        </div>
-        <span class="theme-label theme-mode">VOID</span>
-    </div>
-
-    <!-- Social Dock -->
-    <div class="social-dock glass">
-        <div class="social-links">
-            <span class="theme-label">CONNECT</span>
-            <a href="https://github.com" target="_blank" class="social-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                </svg>
-            </a>
-            <a href="https://linkedin.com" target="_blank" class="social-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-            </a>
-            <a href="mailto:example@email.com" class="social-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                </svg>
-            </a>
-        </div>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <!-- Floating Graphs -->
-        <div class="floating-graph glass" style="top: 10%; left: 5%; padding: 1.5rem; border-radius: 1rem;">
-            <svg width="120" height="120" viewBox="0 0 120 120">
-                <circle cx="60" cy="60" r="50" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3" style="color: var(--glyph-cyan)"/>
-                <ellipse cx="60" cy="60" rx="50" ry="20" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4" style="color: var(--glyph-cyan)"/>
-                <ellipse cx="60" cy="60" rx="20" ry="50" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4" style="color: var(--glyph-cyan)"/>
-            </svg>
-        </div>
-
-        <div class="floating-graph glass" style="top: 25%; right: 10%; padding: 1.5rem; border-radius: 1rem; animation-delay: 1s;">
-            <svg width="100" height="100" viewBox="0 0 100 100">
-                <circle cx="25" cy="70" r="3" fill="var(--glyph-cyan)" opacity="0.8"/>
-                <circle cx="40" cy="50" r="3" fill="var(--glyph-cyan)" opacity="0.8"/>
-                <circle cx="55" cy="60" r="3" fill="var(--glyph-cyan)" opacity="0.8"/>
-                <circle cx="70" cy="35" r="3" fill="var(--glyph-cyan)" opacity="0.8"/>
-                <circle cx="85" cy="40" r="3" fill="var(--glyph-cyan)" opacity="0.8"/>
-            </svg>
-        </div>
-
-        <div class="hero-content">
-            <h1 class="hero-name dot-matrix" id="heroName">SHAVKATJON YULDASHEV</h1>
-            <div class="hero-title glass">
-                <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
-                    <div class="status-dot"></div>
-                    <span class="title-text">DATA SCIENTIST</span>
-                    <div class="status-dot"></div>
-                </div>
-                <div class="subtitle">SYS.CLASSIFICATION: ML/AI SPECIALIST</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section class="portfolio">
-        <div class="portfolio-header">
-            <div class="section-label glass">PORTFOLIO</div>
-            <h2 class="section-title dot-matrix">DEPLOYED SYSTEMS</h2>
-            <p class="section-description">Production-grade machine learning systems engineered for performance, scalability, and reliability.</p>
-        </div>
-
-        <div class="portfolio-scroll">
-            <!-- Project 1 -->
-            <div class="project-card glass">
-                <div class="card-header">
-                    <h3 class="card-title dot-matrix">NEURAL VISION</h3>
-                    <div class="status-tag">
-                        <div class="status-indicator"></div>
-                        <span>SYS.ONLINE</span>
-                    </div>
-                    <div class="category">DEEP LEARNING</div>
-                </div>
-                <div class="card-visual">
-                    <svg width="120" height="120" viewBox="0 0 120 120">
-                        <circle cx="60" cy="20" r="6" fill="none" stroke="var(--glyph-cyan)" stroke-width="2"/>
-                        <circle cx="30" cy="60" r="6" fill="none" stroke="var(--glyph-cyan)" stroke-width="2"/>
-                        <circle cx="90" cy="60" r="6" fill="none" stroke="var(--glyph-cyan)" stroke-width="2"/>
-                        <circle cx="20" cy="100" r="6" fill="none" stroke="var(--glyph-cyan)" stroke-width="2"/>
-                        <circle cx="60" cy="100" r="6" fill="none" stroke="var(--glyph-cyan)" stroke-width="2"/>
-                        <circle cx="100" cy="100" r="6" fill="none" stroke="var(--glyph-cyan)" stroke-width="2"/>
-                        <line x1="60" y1="20" x2="30" y2="60" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <line x1="60" y1="20" x2="90" y2="60" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <line x1="30" y1="60" x2="20" y2="100" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <line x1="30" y1="60" x2="60" y2="100" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <line x1="90" y1="60" x2="60" y2="100" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <line x1="90" y1="60" x2="100" y2="100" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                    </svg>
-                </div>
-                <div class="card-footer">
-                    <div class="tech-stack">
-                        <div class="tech-label">TECH STACK</div>
-                        <div class="tech-chips">
-                            <span class="tech-chip">Python</span>
-                            <span class="tech-chip">TensorFlow</span>
-                            <span class="tech-chip">OpenCV</span>
-                            <span class="tech-chip">Docker</span>
-                        </div>
-                    </div>
-                    <div class="metrics">
-                        <div class="tech-label">TELEMETRY</div>
-                        <div class="metrics-grid">
-                            <div>
-                                <div class="metric-value">99.8%</div>
-                                <div class="metric-label">Accuracy</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">12ms</div>
-                                <div class="metric-label">Latency</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">ResNet</div>
-                                <div class="metric-label">Model</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="action-button glass">
-                        <span class="button-text">OPEN PROJECT</span>
-                        <div class="toggle-switch">
-                            <div class="toggle-knob"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 2 -->
-            <div class="project-card glass">
-                <div class="card-header">
-                    <h3 class="card-title dot-matrix">MARKET ORACLE</h3>
-                    <div class="status-tag">
-                        <div class="status-indicator"></div>
-                        <span>SYS.ACTIVE</span>
-                    </div>
-                    <div class="category">FORECASTING</div>
-                </div>
-                <div class="card-visual">
-                    <svg width="140" height="100" viewBox="0 0 140 100">
-                        <rect x="20" y="60" width="15" height="35" fill="var(--glyph-cyan)" opacity="0.4"/>
-                        <rect x="45" y="45" width="15" height="50" fill="var(--glyph-cyan)" opacity="0.4"/>
-                        <rect x="70" y="55" width="15" height="40" fill="var(--glyph-cyan)" opacity="0.4"/>
-                        <rect x="95" y="30" width="15" height="65" fill="var(--glyph-cyan)" opacity="0.4"/>
-                        <rect x="120" y="40" width="15" height="55" fill="var(--glyph-cyan)" opacity="0.4"/>
-                    </svg>
-                </div>
-                <div class="card-footer">
-                    <div class="tech-stack">
-                        <div class="tech-label">TECH STACK</div>
-                        <div class="tech-chips">
-                            <span class="tech-chip">Python</span>
-                            <span class="tech-chip">PyTorch</span>
-                            <span class="tech-chip">LSTM</span>
-                            <span class="tech-chip">AWS</span>
-                        </div>
-                    </div>
-                    <div class="metrics">
-                        <div class="tech-label">TELEMETRY</div>
-                        <div class="metrics-grid">
-                            <div>
-                                <div class="metric-value">3.2%</div>
-                                <div class="metric-label">MAPE</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">0.94</div>
-                                <div class="metric-label">R²</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">47</div>
-                                <div class="metric-label">Features</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="action-button glass">
-                        <span class="button-text">OPEN PROJECT</span>
-                        <div class="toggle-switch">
-                            <div class="toggle-knob"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="project-card glass">
-                <div class="card-header">
-                    <h3 class="card-title dot-matrix">SENTIMENT CORE</h3>
-                    <div class="status-tag">
-                        <div class="status-indicator"></div>
-                        <span>SYS.DEPLOYED</span>
-                    </div>
-                    <div class="category">NLP</div>
-                </div>
-                <div class="card-visual">
-                    <svg width="120" height="120" viewBox="0 0 120 120">
-                        <circle cx="25" cy="70" r="2" fill="var(--glyph-cyan)"/>
-                        <circle cx="40" cy="50" r="2" fill="var(--glyph-cyan)"/>
-                        <circle cx="55" cy="65" r="2" fill="var(--glyph-cyan)"/>
-                        <circle cx="70" cy="40" r="2" fill="var(--glyph-cyan)"/>
-                        <circle cx="85" cy="55" r="2" fill="var(--glyph-cyan)"/>
-                        <circle cx="95" cy="35" r="2" fill="var(--glyph-cyan)"/>
-                    </svg>
-                </div>
-                <div class="card-footer">
-                    <div class="tech-stack">
-                        <div class="tech-label">TECH STACK</div>
-                        <div class="tech-chips">
-                            <span class="tech-chip">Python</span>
-                            <span class="tech-chip">BERT</span>
-                            <span class="tech-chip">FastAPI</span>
-                            <span class="tech-chip">Redis</span>
-                        </div>
-                    </div>
-                    <div class="metrics">
-                        <div class="tech-label">TELEMETRY</div>
-                        <div class="metrics-grid">
-                            <div>
-                                <div class="metric-value">0.96</div>
-                                <div class="metric-label">F1 Score</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">10K/s</div>
-                                <div class="metric-label">Speed</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">12</div>
-                                <div class="metric-label">Languages</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="action-button glass">
-                        <span class="button-text">OPEN PROJECT</span>
-                        <div class="toggle-switch">
-                            <div class="toggle-knob"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 4 -->
-            <div class="project-card glass">
-                <div class="card-header">
-                    <h3 class="card-title dot-matrix">CLUSTER MATRIX</h3>
-                    <div class="status-tag">
-                        <div class="status-indicator"></div>
-                        <span>SYS.ONLINE</span>
-                    </div>
-                    <div class="category">CLUSTERING</div>
-                </div>
-                <div class="card-visual">
-                    <svg width="120" height="120" viewBox="0 0 120 120">
-                        <circle cx="60" cy="60" r="50" fill="none" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <circle cx="60" cy="60" r="35" fill="none" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <circle cx="60" cy="60" r="20" fill="none" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <circle cx="60" cy="25" r="3" fill="var(--glyph-cyan)"/>
-                        <circle cx="85" cy="45" r="3" fill="var(--glyph-cyan)"/>
-                        <circle cx="85" cy="75" r="3" fill="var(--glyph-cyan)"/>
-                        <circle cx="60" cy="95" r="3" fill="var(--glyph-cyan)"/>
-                        <circle cx="35" cy="75" r="3" fill="var(--glyph-cyan)"/>
-                        <circle cx="35" cy="45" r="3" fill="var(--glyph-cyan)"/>
-                    </svg>
-                </div>
-                <div class="card-footer">
-                    <div class="tech-stack">
-                        <div class="tech-label">TECH STACK</div>
-                        <div class="tech-chips">
-                            <span class="tech-chip">Python</span>
-                            <span class="tech-chip">Scikit-learn</span>
-                            <span class="tech-chip">K-Means</span>
-                            <span class="tech-chip">PostgreSQL</span>
-                        </div>
-                    </div>
-                    <div class="metrics">
-                        <div class="tech-label">TELEMETRY</div>
-                        <div class="metrics-grid">
-                            <div>
-                                <div class="metric-value">0.87</div>
-                                <div class="metric-label">Silhouette</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">8</div>
-                                <div class="metric-label">Clusters</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">2.4M</div>
-                                <div class="metric-label">Records</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="action-button glass">
-                        <span class="button-text">OPEN PROJECT</span>
-                        <div class="toggle-switch">
-                            <div class="toggle-knob"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Spacer -->
-            <div style="width: 2rem; flex-shrink: 0;"></div>
-        </div>
-    </section>
-
-    <script>
-        // Theme Toggle
-        function toggleTheme() {
-            const body = document.body;
-            const dial = document.querySelector('.dial');
-   <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shavkatjon Yuldashev | Data Scientist</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --void-black: #050505;
-            --industrial-grey: #E5E5E5;
-            --glyph-cyan: #00F5FF;
-            --glyph-white: #FFFFFF;
-        }
-
-        body {
-            font-family: 'JetBrains Mono', monospace;
-            background-attachment: fixed;
-            background-size: 40px 40px;
-            transition: background-color 0.3s ease;
-            overflow-x: hidden;
-            cursor: crosshair;
-        }
-
-        body.dark {
-            background-color: var(--void-black);
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-            color: white;
-        }
-
-        body.light {
-            background-color: var(--industrial-grey);
-            background-image: 
-                linear-gradient(to right, rgba(42, 42, 42, 0.15) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(42, 42, 42, 0.15) 1px, transparent 1px);
-            color: #1a1a1a;
-        }
-
-        body.dark::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-size: 40px 40px;
-            background-position: 20px 20px;
-            pointer-events: none;
-            z-index: 0;
-            background-image: 
-                repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(255, 255, 255, 0.2) 19px, rgba(255, 255, 255, 0.2) 21px, transparent 21px, transparent 40px),
-                repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(255, 255, 255, 0.2) 19px, rgba(255, 255, 255, 0.2) 21px, transparent 21px, transparent 40px);
-        }
-
-        body.light::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-size: 40px 40px;
-            background-position: 20px 20px;
-            pointer-events: none;
-            z-index: 0;
-            background-image: 
-                repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(42, 42, 42, 0.25) 19px, rgba(42, 42, 42, 0.25) 21px, transparent 21px, transparent 40px),
-                repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(42, 42, 42, 0.25) 19px, rgba(42, 42, 42, 0.25) 21px, transparent 21px, transparent 40px);
-        }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(24px) saturate(180%);
-            -webkit-backdrop-filter: blur(24px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 
-                0 8px 32px 0 rgba(0, 0, 0, 0.37),
-                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-        }
-
-        .light .glass {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(42, 42, 42, 0.15);
-            box-shadow: 
-                0 8px 32px 0 rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
-        }
-
-        .dot-matrix {
-            font-family: 'JetBrains Mono', monospace;
+        .project-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.4rem;
             font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            text-shadow: 
-                0 0 1px currentColor,
-                1px 0 1px currentColor,
-                -1px 0 1px currentColor,
-                0 1px 1px currentColor,
-                0 -1px 1px currentColor;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
         }
 
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-
-        .glitch-active {
-            animation: glitch 0.2s linear 3;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-
-        @keyframes glow-pulse {
-            0%, 100% { opacity: 1; filter: brightness(1); }
-            50% { opacity: 0.8; filter: brightness(1.5); }
-        }
-
-        @keyframes rotate {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(360deg); }
-        }
-
-        .floating-graph {
-            animation: float 6s ease-in-out infinite;
-            position: absolute;
-            opacity: 0.3;
-        }
-
-        .floating-graph svg {
-            animation: rotate 20s linear infinite;
-            transform-style: preserve-3d;
-        }
-
-        /* Hero Section */
-        .hero {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
+        .project-body {
             padding: 2rem;
         }
 
-        .hero-name {
-            font-size: clamp(2rem, 8vw, 6rem);
-            margin-bottom: 2rem;
-            color: white;
-        }
-
-        .hero-title {
-            display: inline-block;
-            padding: 1rem 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--glyph-cyan);
-            display: inline-block;
-            animation: glow-pulse 2s ease-in-out infinite;
-        }
-
-        .title-text {
-            font-size: clamp(0.875rem, 2vw, 1.5rem);
-            font-weight: 700;
-            letter-spacing: 0.3em;
-            color: white;
-            margin: 0 1rem;
-        }
-
-        .subtitle {
-            font-size: 0.75rem;
-            color: #999;
-            margin-top: 0.5rem;
-            letter-spacing: 0.2em;
-        }
-
-        /* Theme Toggle */
-        .theme-toggle {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.5rem;
-            border-radius: 9999px;
-        }
-
-        .theme-label {
-            font-size: 0.75rem;
-            color: #999;
-            letter-spacing: 0.2em;
-        }
-
-        .dial {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #4a4a4a, #3a3a3a, #5a5a5a);
-            position: relative;
-            cursor: pointer;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease;
-        }
-
-        .dial:hover {
-            transform: scale(1.05);
-        }
-
-        .dial::before {
-            content: '';
-            position: absolute;
-            inset: 8px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #5a5a5a, #4a4a4a, #3a3a3a);
-        }
-
-        .dial::after {
-            content: '';
-            position: absolute;
-            inset: 16px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #3a3a3a, #2a2a2a, #4a4a4a);
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        .dial-indicator {
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 2px;
-            height: 16px;
-            background: var(--glyph-cyan);
-            box-shadow: 0 0 8px var(--glyph-cyan);
-            z-index: 10;
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        }
-
-        .dial.rotated .dial-indicator {
-            transform: translateX(-50%) rotate(180deg);
-            transform-origin: center 28px;
-        }
-
-        .dial-icon {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 5;
-            color: var(--glyph-cyan);
-        }
-
-        /* Social Dock */
-        .social-dock {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            z-index: 1000;
-            padding: 1rem 1.5rem;
-            border-radius: 9999px;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .social-link {
-            color: white;
-            transition: all 0.3s ease;
-            position: relative;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .social-link:hover {
-            color: var(--glyph-cyan);
-            transform: scale(1.1);
-        }
-
-        .social-link::before {
-            content: '';
-            position: absolute;
-            inset: -8px;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--glyph-cyan) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .social-link:hover::before {
-            opacity: 0.6;
-            animation: glow-pulse 1.5s ease-in-out infinite;
-        }
-
-        /* Portfolio Section */
-        .portfolio {
-            padding: 8rem 0;
-            position: relative;
-            z-index: 10;
-        }
-
-        .portfolio-header {
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-            padding: 0 2rem;
-        }
-
-        .section-label {
-            display: inline-block;
-            padding: 0.5rem 1.5rem;
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
-            color: #999;
-            letter-spacing: 0.2em;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 6vw, 4rem);
-            margin-bottom: 1rem;
-            color: white;
-        }
-
-        .section-description {
-            color: #999;
-            max-width: 600px;
-        }
-
-        .portfolio-scroll {
-            display: flex;
-            gap: 2rem;
-            padding: 0 2rem;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-behavior: smooth;
-        }
-
-        .portfolio-scroll::-webkit-scrollbar {
-            height: 12px;
-        }
-
-        .portfolio-scroll::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .portfolio-scroll::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
-        }
-
-        .portfolio-scroll::-webkit-scrollbar-thumb:hover {
-            background: var(--glyph-cyan);
-        }
-
-        .project-card {
-            flex-shrink: 0;
-            width: 320px;
-            height: 600px;
-            border-radius: 24px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(0, 245, 255, 0.3);
-        }
-
-        .card-header {
-            padding: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .card-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            color: white;
-        }
-
-        .status-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 9999px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.75rem;
-            color: #ccc;
-        }
-
-        .status-indicator {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--glyph-cyan);
-            animation: glow-pulse 2s ease-in-out infinite;
-        }
-
-        .category {
-            margin-top: 0.75rem;
-            font-size: 0.75rem;
-            color: #666;
-            letter-spacing: 0.1em;
-        }
-
-        .card-visual {
-            height: 256px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.2));
-            position: relative;
-        }
-
-        .card-visual svg {
-            filter: drop-shadow(0 0 20px rgba(0, 245, 255, 0.5));
-        }
-
-        .card-footer {
-            padding: 1.5rem;
-        }
-
-        .tech-stack {
-            margin-bottom: 1.5rem;
-        }
-
-        .tech-label {
-            font-size: 0.75rem;
-            color: #666;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.1em;
-        }
-
-        .tech-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .tech-chip {
-            padding: 0.25rem 0.75rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            font-size: 0.75rem;
-            color: #ccc;
-        }
-
-        .metrics {
-            margin-bottom: 1.5rem;
-        }
-
-        .metrics-grid {
+        .project-meta {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 0.7rem;
+            color: var(--steel-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        .meta-value {
+            font-size: 0.9rem;
+            color: var(--sunshine);
+            font-weight: 600;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .project-metrics {
+            background: rgba(255, 184, 0, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metrics-title {
+            font-size: 0.75rem;
+            color: var(--steel-gray);
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+        }
+
+        .metrics-list {
+            display: flex;
+            flex-direction: column;
             gap: 0.5rem;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        .metric-row span:first-child {
+            color: var(--text-secondary);
+        }
+
+        .metric-row span:last-child {
+            color: var(--sunshine);
+            font-weight: 600;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            padding: 0.7rem 1.5rem;
+            border: 1px solid var(--sunshine);
+            border-radius: 8px;
+            color: var(--sunshine);
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .project-link:hover {
+            background: var(--sunshine);
+            color: var(--void);
+        }
+
+        /* Field Notes Section */
+        .notes-section {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .note-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .note-card:hover {
+            border-color: var(--sunshine);
+            transform: translateY(-5px);
+        }
+
+        .note-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .note-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--sunshine);
+            margin-bottom: 1rem;
+        }
+
+        .note-text {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--sunshine);
+            font-size: 1.5rem;
+        }
+
+        .info-details h4 {
+            font-size: 0.9rem;
+            color: var(--steel-gray);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-details p {
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .contact-form {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--sunshine);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--sunshine);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Modal Overlays */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--void-light);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            max-width: 1200px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 3rem;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--sunshine);
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: var(--sunshine);
+            color: var(--void);
+        }
+
+        /* Incoming Projects Modal */
+        .projects-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .timeline-item {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-left: 4px solid var(--sunshine);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-title {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--sunshine);
+        }
+
+        .timeline-status {
+            padding: 0.4rem 1rem;
+            background: rgba(255, 184, 0, 0.2);
+            border: 1px solid var(--sunshine);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .timeline-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-tech {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tool-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .tool-card:hover {
+            border-color: var(--sunshine);
+            transform: translateY(-5px);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-name-label {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-category {
+            font-size: 0.8rem;
+            color: var(--steel-gray);
+            margin-bottom: 1rem;
+        }
+
+        .tool-link {
+            display: inline-block;
+            padding: 0.6rem 1.5rem;
+            background: var(--sunshine);
+            color: var(--void);
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .tool-link:hover {
+            background: var(--carrot);
+        }
+
+        /* Recommendations Section */
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .recommendation-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .rec-category {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--sunshine);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .rec-list {
+            list-style: none;
+        }
+
+        .rec-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 184, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .rec-item:last-child {
+            border-bottom: none;
+        }
+
+        .rec-name {
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .rec-link {
+            color: var(--sunshine);
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .rec-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Notes Download Section */
+        .notes-download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .note-download-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
         }
 
-        .metric-value {
-            font-size: 1.125rem;
-            font-weight: 700;
-            color: var(--glyph-cyan);
+        .note-file-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--sunshine);
         }
 
-        .metric-label {
-            font-size: 0.625rem;
-            color: #666;
+        .note-file-name {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .note-file-size {
+            font-size: 0.75rem;
+            color: var(--steel-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .download-btn {
+            padding: 0.7rem 2rem;
+            background: linear-gradient(135deg, var(--sunshine), var(--carrot));
+            color: var(--void);
+            border: none;
+            border-radius: 8px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .action-button {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
 
-        .action-button:hover {
-            border-color: rgba(0, 245, 255, 0.5);
-            background: rgba(0, 245, 255, 0.1);
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 184, 0, 0.3);
         }
 
-        .button-text {
-            font-size: 0.875rem;
-            color: white;
-            letter-spacing: 0.1em;
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
         }
 
-        .toggle-switch {
-            width: 48px;
-            height: 24px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 9999px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            transition: all 0.3s ease;
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 350px;
+                left: -350px;
+            }
+
+            main.sidebar-open {
+                margin-left: 350px;
+            }
         }
 
-        .toggle-knob {
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            width: 16px;
-            height: 16px;
-            background: var(--glyph-cyan);
-            border-radius: 50%;
-            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-center {
+                display: none;
+            }
+
+            section {
+                padding: 2rem 1.5rem;
+            }
+
+            .sidebar {
+                width: 100%;
+                left: -100%;
+            }
+
+            main.sidebar-open {
+                margin-left: 0;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects-grid,
+            .capability-grid,
+            .notes-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .action-button:hover .toggle-knob {
-            transform: translateX(24px);
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--void);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--glass-border);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--sunshine);
         }
     </style>
 </head>
-<body class="dark">
-    <!-- Theme Toggle -->
-    <div class="theme-toggle glass">
-        <span class="theme-label">MODE</span>
-        <div class="dial" onclick="toggleTheme()">
-            <div class="dial-indicator"></div>
-            <div class="dial-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="4"/>
-                    <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/>
-                </svg>
-            </div>
-        </div>
-        <span class="theme-label theme-mode">VOID</span>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-container">
+        <div class="gradient-mesh"></div>
+        <div class="grid-overlay"></div>
     </div>
 
-    <!-- Social Dock -->
-    <div class="social-dock glass">
-        <div class="social-links">
-            <span class="theme-label">CONNECT</span>
-            <a href="https://github.com" target="_blank" class="social-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                </svg>
-            </a>
-            <a href="https://linkedin.com" target="_blank" class="social-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                </svg>
-            </a>
-            <a href="mailto:example@email.com" class="social-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                    <polyline points="22,6 12,13 2,6"/>
-                </svg>
-            </a>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo-section">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="logo">SHAVKATJON YULDASHEV</div>
+        </div>
+        
+        <ul class="nav-center">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#capabilities">Capabilities</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#insights">Insights</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <div class="social-nav">
+            <a href="https://linkedin.com" class="social-icon" target="_blank" title="LinkedIn">in</a>
+            <a href="https://github.com" class="social-icon" target="_blank" title="GitHub">gh</a>
+            <a href="https://instagram.com" class="social-icon" target="_blank" title="Instagram">ig</a>
+            <a href="https://t.me/" class="social-icon" target="_blank" title="Telegram">tg</a>
+            <a href="https://twitter.com" class="social-icon" target="_blank" title="X (Twitter)">x</a>
+            <a href="https://tiktok.com" class="social-icon" target="_blank" title="TikTok">tt</a>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-content">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">System Navigation</h3>
+                
+                <button class="sidebar-btn" onclick="openModal('incomingProjects')">
+                    <span>📊 Incoming Projects</span>
+                    <span class="sidebar-btn-icon">→</span>
+                </button>
+
+                <button class="sidebar-btn" onclick="openModal('confidenceRate')">
+                    <span>📈 Confidence Rate Analysis</span>
+                    <span class="sidebar-btn-icon">→</span>
+                </button>
+
+                <button class="sidebar-btn" onclick="openModal('notesDownload')">
+                    <span>📚 Downloadable Notes</span>
+                    <span class="sidebar-btn-icon">→</span>
+                </button>
+
+                <button class="sidebar-btn" onclick="openModal('recommendations')">
+                    <span>💡 Learning Recommendations</span>
+                    <span class="sidebar-btn-icon">→</span>
+                </button>
+
+                <button class="sidebar-btn" onclick="openModal('tools')">
+                    <span>🛠️ Essential Tools</span>
+                    <span class="sidebar-btn-icon">→</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="mainContent">
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <h1 class="hero-title">DATA SCIENTIST &<br>ML SYSTEMS ENGINEER</h1>
+            <p class="hero-subtitle">Building Intelligent Systems • Production ML • Analytics</p>
+            
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View Case Studies</a>
+                <a href="#contact" class="btn">Initiate Collaboration</a>
+                <a href="#" class="btn" id="downloadCV">Download Resume</a>
+            </div>
+
+            <!-- Metrics Dashboard -->
+            <div class="metrics-grid">
+                <div class="metric-card fade-in">
+                    <div class="metric-number">12+</div>
+                    <div class="metric-label">Models Deployed</div>
+                </div>
+                <div class="metric-card fade-in">
+                    <div class="metric-number">94.3%</div>
+                    <div class="metric-label">Avg Accuracy</div>
+                </div>
+                <div class="metric-card fade-in">
+                    <div class="metric-number">35+</div>
+                    <div class="metric-label">Datasets Processed</div>
+                </div>
+                <div class="metric-card fade-in">
+                    <div class="metric-number">150K+</div>
+                    <div class="metric-label">Lines of Code</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Capabilities Section -->
+        <section id="capabilities">
+            <div class="capability-section">
+                <h2 class="section-title">System Capabilities Matrix</h2>
+
+                <!-- Radar Chart -->
+                <div class="radar-container fade-in">
+                    <canvas id="skillsRadar"></canvas>
+                </div>
+
+                <!-- Capability Grid -->
+                <div class="capability-grid">
+                    <div class="capability-card fade-in">
+                        <h3 class="capability-title">
+                            <span>🤖</span>
+                            Machine Learning
+                        </h3>
+                        <ul class="capability-list">
+                            <li class="capability-item">
+                                <div class="tool-name">PyTorch / TensorFlow</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Production</span>
+                                    <span>4 years</span>
+                                    <span>Deep Learning Pipelines</span>
+                                </div>
+                            </li>
+                            <li class="capability-item">
+                                <div class="tool-name">Scikit-learn</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Advanced</span>
+                                    <span>5 years</span>
+                                    <span>Classical ML</span>
+                                </div>
+                            </li>
+                            <li class="capability-item">
+                                <div class="tool-name">XGBoost / LightGBM</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Production</span>
+                                    <span>3 years</span>
+                                    <span>Ensemble Methods</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="capability-card fade-in">
+                        <h3 class="capability-title">
+                            <span>📊</span>
+                            Statistical Modeling
+                        </h3>
+                        <ul class="capability-list">
+                            <li class="capability-item">
+                                <div class="tool-name">R / Statsmodels</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Advanced</span>
+                                    <span>4 years</span>
+                                    <span>Time Series Analysis</span>
+                                </div>
+                            </li>
+                            <li class="capability-item">
+                                <div class="tool-name">Bayesian Methods</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Advanced</span>
+                                    <span>3 years</span>
+                                    <span>PyMC3 / Stan</span>
+                                </div>
+                            </li>
+                            <li class="capability-item">
+                                <div class="tool-name">A/B Testing</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Production</span>
+                                    <span>3 years</span>
+                                    <span>Experimental Design</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="capability-card fade-in">
+                        <h3 class="capability-title">
+                            <span>⚙️</span>
+                            Data Engineering
+                        </h3>
+                        <ul class="capability-list">
+                            <li class="capability-item">
+                                <div class="tool-name">Apache Spark / PySpark</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Advanced</span>
+                                    <span>3 years</span>
+                                    <span>Big Data Processing</span>
+                                </div>
+                            </li>
+                            <li class="capability-item">
+                                <div class="tool-name">SQL / PostgreSQL</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Production</span>
+                                    <span>5 years</span>
+                                    <span>Database Design</span>
+                                </div>
+                            </li>
+                            <li class="capability-item">
+                                <div class="tool-name">Airflow / Luigi</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Production</span>
+                                    <span>2 years</span>
+                                    <span>Pipeline Orchestration</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="capability-card fade-in">
+                        <h3 class="capability-title">
+                            <span>📈</span>
+                            Visualization
+                        </h3>
+                        <ul class="capability-list">
+                            <li class="capability-item">
+                                <div class="tool-name">Plotly / D3.js</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Advanced</span>
+                                    <span>4 years</span>
+                                    <span>Interactive Dashboards</span>
+                                </div>
+                            </li>
+                            <li class="capability-item">
+                                <div class="tool-name">Tableau / Power BI</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Advanced</span>
+                                    <span>3 years</span>
+                                    <span>Business Intelligence</span>
+                                </div>
+                            </li>
+                            <li class="capability-item">
+                                <div class="tool-name">Matplotlib / Seaborn</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Production</span>
+                                    <span>5 years</span>
+                                    <span>Statistical Graphics</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="capability-card fade-in">
+                        <h3 class="capability-title">
+                            <span>🚀</span>
+                            Deployment
+                        </h3>
+                        <ul class="capability-list">
+                            <li class="capability-item">
+                                <div class="tool-name">Docker / Kubernetes</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Production</span>
+                                    <span>3 years</span>
+                                    <span>Containerization</span>
+                                </div>
+                            </li>
+                            <li class="capability-item">
+                                <div class="tool-name">FastAPI / Flask</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Production</span>
+                                    <span>4 years</span>
+                                    <span>API Development</span>
+                                </div>
+                            </li>
+                            <li class="capability-item">
+                                <div class="tool-name">MLflow / Weights & Biases</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Advanced</span>
+                                    <span>2 years</span>
+                                    <span>Experiment Tracking</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="capability-card fade-in">
+                        <h3 class="capability-title">
+                            <span>☁️</span>
+                            Infrastructure
+                        </h3>
+                        <ul class="capability-list">
+                            <li class="capability-item">
+                                <div class="tool-name">AWS (SageMaker, EC2, S3)</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Production</span>
+                                    <span>3 years</span>
+                                    <span>Cloud ML</span>
+                                </div>
+                            </li>
+                            <li class="capability-item">
+                                <div class="tool-name">Google Cloud Platform</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Advanced</span>
+                                    <span>2 years</span>
+                                    <span>Vertex AI</span>
+                                </div>
+                            </li>
+                            <li class="capability-item">
+                                <div class="tool-name">Terraform / CI/CD</div>
+                                <div class="tool-meta">
+                                    <span class="level-badge">Advanced</span>
+                                    <span>2 years</span>
+                                    <span>Infrastructure as Code</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <div class="projects-section">
+                <h2 class="section-title">Case Studies & Production Systems</h2>
+                
+                <div class="projects-grid">
+                    <!-- Project Card 1 -->
+                    <div class="project-card fade-in">
+                        <div class="project-header">
+                            <div class="project-tags">
+                                <span class="tag">PyTorch</span>
+                                <span class="tag">Pandas</span>
+                                <span class="tag">D3.js</span>
+                            </div>
+                            <h3 class="project-title">F1 Tyre Degradation Analytics</h3>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Problem</span>
+                                    <span class="meta-value">Real-time Strategy</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Model</span>
+                                    <span class="meta-value">LSTM Network</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Latency</span>
+                                    <span class="meta-value">&lt;50ms</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Impact</span>
+                                    <span class="meta-value">12% Time Saved</span>
+                                </div>
+                            </div>
+                            <p class="project-description">
+                                Predictive system analyzing tire compound degradation patterns across track conditions. 
+                                Trained on 200+ race sessions with feature engineering for temperature, track evolution, and driver behavior.
+                            </p>
+                            <div class="project-metrics">
+                                <div class="metrics-title">Performance Metrics</div>
+                                <div class="metrics-list">
+                                    <div class="metric-row">
+                                        <span>Prediction Accuracy</span>
+                                        <span>94.7%</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>MAE (Lap Time)</span>
+                                        <span>0.23s</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>Data Points</span>
+                                        <span>2.3M+</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">Live Demo</a>
+                                <a href="#" class="project-link">GitHub</a>
+                                <a href="#" class="project-link">Paper</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 2 -->
+                    <div class="project-card fade-in">
+                        <div class="project-header">
+                            <div class="project-tags">
+                                <span class="tag">TensorFlow</span>
+                                <span class="tag">FastAPI</span>
+                                <span class="tag">Docker</span>
+                            </div>
+                            <h3 class="project-title">Neural Race Outcome Predictor</h3>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Problem</span>
+                                    <span class="meta-value">Multi-class Prediction</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Architecture</span>
+                                    <span class="meta-value">Transformer</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Deployment</span>
+                                    <span class="meta-value">AWS SageMaker</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Users</span>
+                                    <span class="meta-value">5K+ Daily</span>
+                                </div>
+                            </div>
+                            <p class="project-description">
+                                Production ML system predicting race positions using driver stats, weather conditions, and historical performance. 
+                                Handles 50+ features with automated feature selection and cross-validation pipeline.
+                            </p>
+                            <div class="project-metrics">
+                                <div class="metrics-title">Performance Metrics</div>
+                                <div class="metrics-list">
+                                    <div class="metric-row">
+                                        <span>Top-3 Accuracy</span>
+                                        <span>92.4%</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>F1 Score</span>
+                                        <span>0.89</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>Inference Time</span>
+                                        <span>28ms</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">API Docs</a>
+                                <a href="#" class="project-link">GitHub</a>
+                                <a href="#" class="project-link">Metrics</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 3 -->
+                    <div class="project-card fade-in">
+                        <div class="project-header">
+                            <div class="project-tags">
+                                <span class="tag">Rust</span>
+                                <span class="tag">WebGL</span>
+                                <span class="tag">Monte Carlo</span>
+                            </div>
+                            <h3 class="project-title">Pit Strategy Simulator</h3>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Constraint</span>
+                                    <span class="meta-value">Real-time Compute</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Method</span>
+                                    <span class="meta-value">Simulation</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Performance</span>
+                                    <span class="meta-value">10K sims/sec</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Optimization</span>
+                                    <span class="meta-value">15% Faster</span>
+                                </div>
+                            </div>
+                            <p class="project-description">
+                                High-performance strategy engine running thousands of race scenarios. Built with Rust for memory safety and speed, 
+                                featuring WebAssembly compilation for browser deployment with GPU acceleration.
+                            </p>
+                            <div class="project-metrics">
+                                <div class="metrics-title">Performance Metrics</div>
+                                <div class="metrics-list">
+                                    <div class="metric-row">
+                                        <span>Simulation Speed</span>
+                                        <span>10K/s</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>Memory Usage</span>
+                                        <span>45MB</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>Strategy Accuracy</span>
+                                        <span>88.3%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">Demo</a>
+                                <a href="#" class="project-link">Source</a>
+                                <a href="#" class="project-link">Benchmarks</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 4 - Template for User -->
+                    <div class="project-card fade-in">
+                        <div class="project-header">
+                            <div class="project-tags">
+                                <span class="tag">Your Tag 1</span>
+                                <span class="tag">Your Tag 2</span>
+                                <span class="tag">Your Tag 3</span>
+                            </div>
+                            <h3 class="project-title">Your Project Title Here</h3>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Problem</span>
+                                    <span class="meta-value">Business Context</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Model</span>
+                                    <span class="meta-value">Architecture</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Constraint</span>
+                                    <span class="meta-value">Key Constraint</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Impact</span>
+                                    <span class="meta-value">Measurable Result</span>
+                                </div>
+                            </div>
+                            <p class="project-description">
+                                Describe your project here. Focus on: What problem did you solve? What constraints did you face? 
+                                Why did you choose this architecture? What were the trade-offs?
+                            </p>
+                            <div class="project-metrics">
+                                <div class="metrics-title">Performance Metrics</div>
+                                <div class="metrics-list">
+                                    <div class="metric-row">
+                                        <span>Metric Name</span>
+                                        <span>Value</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>Metric Name</span>
+                                        <span>Value</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>Metric Name</span>
+                                        <span>Value</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">Demo</a>
+                                <a href="#" class="project-link">GitHub</a>
+                                <a href="#" class="project-link">Docs</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 5 - Template -->
+                    <div class="project-card fade-in">
+                        <div class="project-header">
+                            <div class="project-tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">Scikit-learn</span>
+                                <span class="tag">PostgreSQL</span>
+                            </div>
+                            <h3 class="project-title">Customer Churn Prediction System</h3>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Problem</span>
+                                    <span class="meta-value">Binary Classification</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Model</span>
+                                    <span class="meta-value">XGBoost</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Data Size</span>
+                                    <span class="meta-value">500K Users</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Impact</span>
+                                    <span class="meta-value">$2.3M Saved</span>
+                                </div>
+                            </div>
+                            <p class="project-description">
+                                Enterprise churn prediction with automated feature engineering pipeline. Handles class imbalance with SMOTE, 
+                                deployed with daily batch predictions and monitoring for model drift.
+                            </p>
+                            <div class="project-metrics">
+                                <div class="metrics-title">Performance Metrics</div>
+                                <div class="metrics-list">
+                                    <div class="metric-row">
+                                        <span>ROC-AUC</span>
+                                        <span>0.93</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>Precision @ 10%</span>
+                                        <span>0.87</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>Features</span>
+                                        <span>142</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">Case Study</a>
+                                <a href="#" class="project-link">Code</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Card 6 - Template -->
+                    <div class="project-card fade-in">
+                        <div class="project-header">
+                            <div class="project-tags">
+                                <span class="tag">Add Your</span>
+                                <span class="tag">Tech Stack</span>
+                                <span class="tag">Here</span>
+                            </div>
+                            <h3 class="project-title">Add Your Project Name</h3>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <div class="meta-item">
+                                    <span class="meta-label">Problem</span>
+                                    <span class="meta-value">Type</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Model</span>
+                                    <span class="meta-value">Name</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Scale</span>
+                                    <span class="meta-value">Size</span>
+                                </div>
+                                <div class="meta-item">
+                                    <span class="meta-label">Impact</span>
+                                    <span class="meta-value">Result</span>
+                                </div>
+                            </div>
+                            <p class="project-description">
+                                Add your detailed project description here. Remember to include business context, technical constraints, 
+                                model architecture reasoning, evaluation metrics, and measurable impact.
+                            </p>
+                            <div class="project-metrics">
+                                <div class="metrics-title">Performance Metrics</div>
+                                <div class="metrics-list">
+                                    <div class="metric-row">
+                                        <span>Metric 1</span>
+                                        <span>Value</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>Metric 2</span>
+                                        <span>Value</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>Metric 3</span>
+                                        <span>Value</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link">Link 1</a>
+                                <a href="#" class="project-link">Link 2</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add more project cards as needed - just copy and modify the template above -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Field Notes / Lab Logs Section -->
+        <section id="insights">
+            <div class="notes-section">
+                <h2 class="section-title">Field Notes & Technical Philosophy</h2>
+                
+                <div class="notes-grid">
+                    <div class="note-card fade-in">
+                        <div class="note-icon">📊</div>
+                        <h3 class="note-title">Why Most ML Projects Fail in Production</h3>
+                        <p class="note-text">
+                            Production ML is 20% modeling and 80% infrastructure. Data drift, monitoring gaps, and lack of 
+                            version control kill more models than poor accuracy ever will. The difference between a Kaggle 
+                            competition and real-world deployment is understanding that perfect accuracy on test data means 
+                            nothing if your model can't handle production constraints.
+                        </p>
+                    </div>
+
+                    <div class="note-card fade-in">
+                        <div class="note-icon">⚖️</div>
+                        <h3 class="note-title">Bias-Variance in Business Settings</h3>
+                        <p class="note-text">
+                            In enterprise ML, high bias often beats high variance. A simpler model that stakeholders understand 
+                            and can debug will outlive a complex ensemble with 2% better accuracy. The real trade-off isn't 
+                            statistical—it's operational: Can you explain decisions? Can you fix failures quickly? Can the 
+                            system run reliably at 3AM when you're asleep?
+                        </p>
+                    </div>
+
+                    <div class="note-card fade-in">
+                        <div class="note-icon">🎯</div>
+                        <h3 class="note-title">The Deployment-First Mindset</h3>
+                        <p class="note-text">
+                            Start every project asking: "How will this run in production?" not "What's the best algorithm?" 
+                            Latency requirements, memory constraints, retraining frequency—these determine architecture more 
+                            than model performance. A 90% accurate model that responds in 50ms will generate more business 
+                            value than a 95% model with 2-second latency.
+                        </p>
+                    </div>
+
+                    <div class="note-card fade-in">
+                        <div class="note-icon">🔍</div>
+                        <h3 class="note-title">Data Quality Over Quantity</h3>
+                        <p class="note-text">
+                            More data doesn't always help. I've seen 100K clean, well-labeled samples outperform 10M noisy 
+                            records. The engineering effort should focus on: eliminating label errors, removing duplicates, 
+                            handling missing data strategically, and understanding class distribution. Garbage in, garbage out—
+                            no matter how sophisticated your neural network is.
+                        </p>
+                    </div>
+
+                    <div class="note-card fade-in">
+                        <div class="note-icon">🛡️</div>
+                        <h3 class="note-title">Interpretability is Non-Negotiable</h3>
+                        <p class="note-text">
+                            Black-box models are a liability in regulated industries and high-stakes applications. SHAP values, 
+                            feature importance, and counterfactual explanations aren't optional—they're requirements. When your 
+                            model denies a loan or flags a transaction, you need to explain why. Prediction without explanation 
+                            is just sophisticated guessing.
+                        </p>
+                    </div>
+
+                    <div class="note-card fade-in">
+                        <div class="note-icon">⚡</div>
+                        <h3 class="note-title">Technical Constraints Shape Solutions</h3>
+                        <p class="note-text">
+                            Real-world ML means working within: memory budgets (edge devices can't load 2GB models), latency 
+                            SLAs (recommendation engines need sub-100ms responses), cost constraints (inference on millions of 
+                            users costs real money), and regulatory requirements (GDPR, data retention policies). These aren't 
+                            limitations—they're the actual problem you're solving.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="contact-content">
+                <h2 class="section-title">Initiate Collaboration</h2>
+                
+                <div class="contact-grid">
+                    <div class="contact-info fade-in">
+                        <div class="info-item">
+                            <div class="info-icon">📧</div>
+                            <div class="info-details">
+                                <h4>Email</h4>
+                                <p>your.email@example.com</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-icon">📍</div>
+                            <div class="info-details">
+                                <h4>Location</h4>
+                                <p>Seoul, South Korea</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-icon">🌐</div>
+                            <div class="info-details">
+                                <h4>Languages</h4>
+                                <p>English, Korean, Uzbek, Russian</p>
+                            </div>
+                        </div>
+
+                        <div class="info-item">
+                            <div class="info-icon">💼</div>
+                            <div class="info-details">
+                                <h4>Open For</h4>
+                                <p>Research Collaboration, Consulting, Full-time Roles</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="contact-form fade-in" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Shavkatjon Yuldashev | Data Scientist & ML Systems Engineer | Built for Production</p>
+    </footer>
+
+    <!-- Modals -->
+    
+    <!-- Incoming Projects Modal -->
+    <div class="modal-overlay" id="incomingProjectsModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('incomingProjects')">×</button>
+            <h2 class="section-title" style="font-size: 2rem; margin-bottom: 2rem;">Incoming Projects Pipeline</h2>
+            
+            <div class="projects-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <h3 class="timeline-title">Automated Feature Engineering Platform</h3>
+                        <span class="timeline-status">In Development</span>
+                    </div>
+                    <p class="timeline-description">
+                        Building an open-source AutoML platform for automated feature generation and selection. 
+                        Uses genetic algorithms and meta-learning to discover optimal transformations for tabular data.
+                    </p>
+                    <div class="timeline-tech">
+                        <span class="tag">Python</span>
+                        <span class="tag">Ray</span>
+                        <span class="tag">PostgreSQL</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <h3 class="timeline-title">Real-time Anomaly Detection System</h3>
+                        <span class="timeline-status">Planning</span>
+                    </div>
+                    <p class="timeline-description">
+                        Streaming anomaly detection for time-series IoT data. Implementing variational autoencoders with 
+                        Kafka integration for sub-second detection latency on 100K+ data points per second.
+                    </p>
+                    <div class="timeline-tech">
+                        <span class="tag">Kafka</span>
+                        <span class="tag">PyTorch</span>
+                        <span class="tag">Redis</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <h3 class="timeline-title">Multi-Modal Learning Framework</h3>
+                        <span class="timeline-status">Research</span>
+                    </div>
+                    <p class="timeline-description">
+                        Research project combining vision and language models for industrial defect detection. 
+                        Exploring contrastive learning approaches to leverage both visual inspection and maintenance logs.
+                    </p>
+                    <div class="timeline-tech">
+                        <span class="tag">CLIP</span>
+                        <span class="tag">Transformers</span>
+                        <span class="tag">Azure</span>
+                    </div>
+                </div>
+
+                <!-- Add more incoming projects here -->
+            </div>
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <!-- Floating Graphs -->
-        <div class="floating-graph glass" style="top: 10%; left: 5%; padding: 1.5rem; border-radius: 1rem;">
-            <svg width="120" height="120" viewBox="0 0 120 120">
-                <circle cx="60" cy="60" r="50" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3" style="color: var(--glyph-cyan)"/>
-                <ellipse cx="60" cy="60" rx="50" ry="20" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4" style="color: var(--glyph-cyan)"/>
-                <ellipse cx="60" cy="60" rx="20" ry="50" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4" style="color: var(--glyph-cyan)"/>
-            </svg>
-        </div>
-
-        <div class="floating-graph glass" style="top: 25%; right: 10%; padding: 1.5rem; border-radius: 1rem; animation-delay: 1s;">
-            <svg width="100" height="100" viewBox="0 0 100 100">
-                <circle cx="25" cy="70" r="3" fill="var(--glyph-cyan)" opacity="0.8"/>
-                <circle cx="40" cy="50" r="3" fill="var(--glyph-cyan)" opacity="0.8"/>
-                <circle cx="55" cy="60" r="3" fill="var(--glyph-cyan)" opacity="0.8"/>
-                <circle cx="70" cy="35" r="3" fill="var(--glyph-cyan)" opacity="0.8"/>
-                <circle cx="85" cy="40" r="3" fill="var(--glyph-cyan)" opacity="0.8"/>
-            </svg>
-        </div>
-
-        <div class="hero-content">
-            <h1 class="hero-name dot-matrix" id="heroName">SHAVKATJON YULDASHEV</h1>
-            <div class="hero-title glass">
-                <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
-                    <div class="status-dot"></div>
-                    <span class="title-text">DATA SCIENTIST</span>
-                    <div class="status-dot"></div>
-                </div>
-                <div class="subtitle">SYS.CLASSIFICATION: ML/AI SPECIALIST</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section class="portfolio">
-        <div class="portfolio-header">
-            <div class="section-label glass">PORTFOLIO</div>
-            <h2 class="section-title dot-matrix">DEPLOYED SYSTEMS</h2>
-            <p class="section-description">Production-grade machine learning systems engineered for performance, scalability, and reliability.</p>
-        </div>
-
-        <div class="portfolio-scroll">
-            <!-- Project 1 -->
-            <div class="project-card glass">
-                <div class="card-header">
-                    <h3 class="card-title dot-matrix">NEURAL VISION</h3>
-                    <div class="status-tag">
-                        <div class="status-indicator"></div>
-                        <span>SYS.ONLINE</span>
-                    </div>
-                    <div class="category">DEEP LEARNING</div>
-                </div>
-                <div class="card-visual">
-                    <svg width="120" height="120" viewBox="0 0 120 120">
-                        <circle cx="60" cy="20" r="6" fill="none" stroke="var(--glyph-cyan)" stroke-width="2"/>
-                        <circle cx="30" cy="60" r="6" fill="none" stroke="var(--glyph-cyan)" stroke-width="2"/>
-                        <circle cx="90" cy="60" r="6" fill="none" stroke="var(--glyph-cyan)" stroke-width="2"/>
-                        <circle cx="20" cy="100" r="6" fill="none" stroke="var(--glyph-cyan)" stroke-width="2"/>
-                        <circle cx="60" cy="100" r="6" fill="none" stroke="var(--glyph-cyan)" stroke-width="2"/>
-                        <circle cx="100" cy="100" r="6" fill="none" stroke="var(--glyph-cyan)" stroke-width="2"/>
-                        <line x1="60" y1="20" x2="30" y2="60" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <line x1="60" y1="20" x2="90" y2="60" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <line x1="30" y1="60" x2="20" y2="100" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <line x1="30" y1="60" x2="60" y2="100" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <line x1="90" y1="60" x2="60" y2="100" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <line x1="90" y1="60" x2="100" y2="100" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                    </svg>
-                </div>
-                <div class="card-footer">
-                    <div class="tech-stack">
-                        <div class="tech-label">TECH STACK</div>
-                        <div class="tech-chips">
-                            <span class="tech-chip">Python</span>
-                            <span class="tech-chip">TensorFlow</span>
-                            <span class="tech-chip">OpenCV</span>
-                            <span class="tech-chip">Docker</span>
-                        </div>
-                    </div>
-                    <div class="metrics">
-                        <div class="tech-label">TELEMETRY</div>
-                        <div class="metrics-grid">
-                            <div>
-                                <div class="metric-value">99.8%</div>
-                                <div class="metric-label">Accuracy</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">12ms</div>
-                                <div class="metric-label">Latency</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">ResNet</div>
-                                <div class="metric-label">Model</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="action-button glass">
-                        <span class="button-text">OPEN PROJECT</span>
-                        <div class="toggle-switch">
-                            <div class="toggle-knob"></div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Confidence Rate Modal -->
+    <div class="modal-overlay" id="confidenceRateModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('confidenceRate')">×</button>
+            <h2 class="section-title" style="font-size: 2rem; margin-bottom: 2rem;">Skill Confidence Analysis</h2>
+            
+            <div style="max-width: 800px; margin: 0 auto 3rem;">
+                <canvas id="confidenceRadar"></canvas>
             </div>
 
-            <!-- Project 2 -->
-            <div class="project-card glass">
-                <div class="card-header">
-                    <h3 class="card-title dot-matrix">MARKET ORACLE</h3>
-                    <div class="status-tag">
-                        <div class="status-indicator"></div>
-                        <span>SYS.ACTIVE</span>
-                    </div>
-                    <div class="category">FORECASTING</div>
+            <div class="capability-grid">
+                <div class="capability-card">
+                    <h3 class="capability-title">Mathematics Foundation</h3>
+                    <ul class="capability-list">
+                        <li class="capability-item">
+                            <div class="tool-name">Statistics</div>
+                            <div class="tool-meta">
+                                <span class="level-badge">95%</span>
+                                <span>Hypothesis testing, distributions, inference</span>
+                            </div>
+                        </li>
+                        <li class="capability-item">
+                            <div class="tool-name">Linear Algebra</div>
+                            <div class="tool-meta">
+                                <span class="level-badge">92%</span>
+                                <span>Matrix operations, eigenvalues, SVD</span>
+                            </div>
+                        </li>
+                        <li class="capability-item">
+                            <div class="tool-name">Calculus</div>
+                            <div class="tool-meta">
+                                <span class="level-badge">90%</span>
+                                <span>Optimization, gradients, backpropagation</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="card-visual">
-                    <svg width="140" height="100" viewBox="0 0 140 100">
-                        <rect x="20" y="60" width="15" height="35" fill="var(--glyph-cyan)" opacity="0.4"/>
-                        <rect x="45" y="45" width="15" height="50" fill="var(--glyph-cyan)" opacity="0.4"/>
-                        <rect x="70" y="55" width="15" height="40" fill="var(--glyph-cyan)" opacity="0.4"/>
-                        <rect x="95" y="30" width="15" height="65" fill="var(--glyph-cyan)" opacity="0.4"/>
-                        <rect x="120" y="40" width="15" height="55" fill="var(--glyph-cyan)" opacity="0.4"/>
-                    </svg>
+
+                <div class="capability-card">
+                    <h3 class="capability-title">Programming & Tools</h3>
+                    <ul class="capability-list">
+                        <li class="capability-item">
+                            <div class="tool-name">Python</div>
+                            <div class="tool-meta">
+                                <span class="level-badge">98%</span>
+                                <span>Advanced OOP, async, optimization</span>
+                            </div>
+                        </li>
+                        <li class="capability-item">
+                            <div class="tool-name">Pandas / NumPy</div>
+                            <div class="tool-meta">
+                                <span class="level-badge">96%</span>
+                                <span>Vectorization, memory optimization</span>
+                            </div>
+                        </li>
+                        <li class="capability-item">
+                            <div class="tool-name">TensorFlow / PyTorch</div>
+                            <div class="tool-meta">
+                                <span class="level-badge">94%</span>
+                                <span>Custom architectures, distributed training</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-                <div class="card-footer">
-                    <div class="tech-stack">
-                        <div class="tech-label">TECH STACK</div>
-                        <div class="tech-chips">
-                            <span class="tech-chip">Python</span>
-                            <span class="tech-chip">PyTorch</span>
-                            <span class="tech-chip">LSTM</span>
-                            <span class="tech-chip">AWS</span>
-                        </div>
-                    </div>
-                    <div class="metrics">
-                        <div class="tech-label">TELEMETRY</div>
-                        <div class="metrics-grid">
-                            <div>
-                                <div class="metric-value">3.2%</div>
-                                <div class="metric-label">MAPE</div>
+
+                <div class="capability-card">
+                    <h3 class="capability-title">ML Techniques</h3>
+                    <ul class="capability-list">
+                        <li class="capability-item">
+                            <div class="tool-name">Regression Models</div>
+                            <div class="tool-meta">
+                                <span class="level-badge">97%</span>
+                                <span>Linear, Ridge, Lasso, Elastic Net</span>
                             </div>
-                            <div>
-                                <div class="metric-value">0.94</div>
-                                <div class="metric-label">R²</div>
+                        </li>
+                        <li class="capability-item">
+                            <div class="tool-name">Model Building</div>
+                            <div class="tool-meta">
+                                <span class="level-badge">95%</span>
+                                <span>Pipeline design, hyperparameter tuning</span>
                             </div>
-                            <div>
-                                <div class="metric-value">47</div>
-                                <div class="metric-label">Features</div>
+                        </li>
+                        <li class="capability-item">
+                            <div class="tool-name">Feature Engineering</div>
+                            <div class="tool-meta">
+                                <span class="level-badge">93%</span>
+                                <span>Transformation, selection, encoding</span>
                             </div>
-                        </div>
-                    </div>
-                    <div class="action-button glass">
-                        <span class="button-text">OPEN PROJECT</span>
-                        <div class="toggle-switch">
-                            <div class="toggle-knob"></div>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="capability-card">
+                    <h3 class="capability-title">Soft Skills</h3>
+                    <ul class="capability-list">
+                        <li class="capability-item">
+                            <div class="tool-name">Project Management</div>
+                            <div class="tool-meta">
+                                <span class="level-badge">88%</span>
+                                <span>Agile, Scrum, stakeholder communication</span>
+                            </div>
+                        </li>
+                        <li class="capability-item">
+                            <div class="tool-name">Technical Writing</div>
+                            <div class="tool-meta">
+                                <span class="level-badge">90%</span>
+                                <span>Documentation, papers, reports</span>
+                            </div>
+                        </li>
+                        <li class="capability-item">
+                            <div class="tool-name">Code Review</div>
+                            <div class="tool-meta">
+                                <span class="level-badge">92%</span>
+                                <span>Best practices, optimization, debugging</span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
-
-            <!-- Project 3 -->
-            <div class="project-card glass">
-                <div class="card-header">
-                    <h3 class="card-title dot-matrix">SENTIMENT CORE</h3>
-                    <div class="status-tag">
-                        <div class="status-indicator"></div>
-                        <span>SYS.DEPLOYED</span>
-                    </div>
-                    <div class="category">NLP</div>
-                </div>
-                <div class="card-visual">
-                    <svg width="120" height="120" viewBox="0 0 120 120">
-                        <circle cx="25" cy="70" r="2" fill="var(--glyph-cyan)"/>
-                        <circle cx="40" cy="50" r="2" fill="var(--glyph-cyan)"/>
-                        <circle cx="55" cy="65" r="2" fill="var(--glyph-cyan)"/>
-                        <circle cx="70" cy="40" r="2" fill="var(--glyph-cyan)"/>
-                        <circle cx="85" cy="55" r="2" fill="var(--glyph-cyan)"/>
-                        <circle cx="95" cy="35" r="2" fill="var(--glyph-cyan)"/>
-                    </svg>
-                </div>
-                <div class="card-footer">
-                    <div class="tech-stack">
-                        <div class="tech-label">TECH STACK</div>
-                        <div class="tech-chips">
-                            <span class="tech-chip">Python</span>
-                            <span class="tech-chip">BERT</span>
-                            <span class="tech-chip">FastAPI</span>
-                            <span class="tech-chip">Redis</span>
-                        </div>
-                    </div>
-                    <div class="metrics">
-                        <div class="tech-label">TELEMETRY</div>
-                        <div class="metrics-grid">
-                            <div>
-                                <div class="metric-value">0.96</div>
-                                <div class="metric-label">F1 Score</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">10K/s</div>
-                                <div class="metric-label">Speed</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">12</div>
-                                <div class="metric-label">Languages</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="action-button glass">
-                        <span class="button-text">OPEN PROJECT</span>
-                        <div class="toggle-switch">
-                            <div class="toggle-knob"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 4 -->
-            <div class="project-card glass">
-                <div class="card-header">
-                    <h3 class="card-title dot-matrix">CLUSTER MATRIX</h3>
-                    <div class="status-tag">
-                        <div class="status-indicator"></div>
-                        <span>SYS.ONLINE</span>
-                    </div>
-                    <div class="category">CLUSTERING</div>
-                </div>
-                <div class="card-visual">
-                    <svg width="120" height="120" viewBox="0 0 120 120">
-                        <circle cx="60" cy="60" r="50" fill="none" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <circle cx="60" cy="60" r="35" fill="none" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <circle cx="60" cy="60" r="20" fill="none" stroke="var(--glyph-cyan)" stroke-width="1" opacity="0.3"/>
-                        <circle cx="60" cy="25" r="3" fill="var(--glyph-cyan)"/>
-                        <circle cx="85" cy="45" r="3" fill="var(--glyph-cyan)"/>
-                        <circle cx="85" cy="75" r="3" fill="var(--glyph-cyan)"/>
-                        <circle cx="60" cy="95" r="3" fill="var(--glyph-cyan)"/>
-                        <circle cx="35" cy="75" r="3" fill="var(--glyph-cyan)"/>
-                        <circle cx="35" cy="45" r="3" fill="var(--glyph-cyan)"/>
-                    </svg>
-                </div>
-                <div class="card-footer">
-                    <div class="tech-stack">
-                        <div class="tech-label">TECH STACK</div>
-                        <div class="tech-chips">
-                            <span class="tech-chip">Python</span>
-                            <span class="tech-chip">Scikit-learn</span>
-                            <span class="tech-chip">K-Means</span>
-                            <span class="tech-chip">PostgreSQL</span>
-                        </div>
-                    </div>
-                    <div class="metrics">
-                        <div class="tech-label">TELEMETRY</div>
-                        <div class="metrics-grid">
-                            <div>
-                                <div class="metric-value">0.87</div>
-                                <div class="metric-label">Silhouette</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">8</div>
-                                <div class="metric-label">Clusters</div>
-                            </div>
-                            <div>
-                                <div class="metric-value">2.4M</div>
-                                <div class="metric-label">Records</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="action-button glass">
-                        <span class="button-text">OPEN PROJECT</span>
-                        <div class="toggle-switch">
-                            <div class="toggle-knob"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Spacer -->
-            <div style="width: 2rem; flex-shrink: 0;"></div>
         </div>
-    </section>
+    </div>
+
+    <!-- Notes Download Modal -->
+    <div class="modal-overlay" id="notesDownloadModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('notesDownload')">×</button>
+            <h2 class="section-title" style="font-size: 2rem; margin-bottom: 2rem;">Downloadable Learning Resources</h2>
+            
+            <div class="notes-download-grid">
+                <div class="note-download-card">
+                    <div class="note-file-icon">📊</div>
+                    <div class="note-file-name">Statistics Cheat Sheet</div>
+                    <div class="note-file-size">PDF • 2.4 MB</div>
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+
+                <div class="note-download-card">
+                    <div class="note-file-icon">🧮</div>
+                    <div class="note-file-name">Linear Algebra Notes</div>
+                    <div class="note-file-size">PDF • 3.1 MB</div>
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+
+                <div class="note-download-card">
+                    <div class="note-file-icon">🐍</div>
+                    <div class="note-file-name">Python for Data Science</div>
+                    <div class="note-file-size">PDF • 4.8 MB</div>
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+
+                <div class="note-download-card">
+                    <div class="note-file-icon">🤖</div>
+                    <div class="note-file-name">ML Algorithms Guide</div>
+                    <div class="note-file-size">PDF • 5.2 MB</div>
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+
+                <div class="note-download-card">
+                    <div class="note-file-icon">🧠</div>
+                    <div class="note-file-name">Deep Learning Fundamentals</div>
+                    <div class="note-file-size">PDF • 6.7 MB</div>
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+
+                <div class="note-download-card">
+                    <div class="note-file-icon">📈</div>
+                    <div class="note-file-name">Time Series Analysis</div>
+                    <div class="note-file-size">PDF • 3.9 MB</div>
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+
+                <div class="note-download-card">
+                    <div class="note-file-icon">🔍</div>
+                    <div class="note-file-name">Feature Engineering Cookbook</div>
+                    <div class="note-file-size">PDF • 4.3 MB</div>
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+
+                <div class="note-download-card">
+                    <div class="note-file-icon">☁️</div>
+                    <div class="note-file-name">MLOps Best Practices</div>
+                    <div class="note-file-size">PDF • 2.9 MB</div>
+                    <a href="#" class="download-btn">Download</a>
+                </div>
+
+                <!-- Add more downloadable notes here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommendations Modal -->
+    <div class="modal-overlay" id="recommendationsModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('recommendations')">×</button>
+            <h2 class="section-title" style="font-size: 2rem; margin-bottom: 2rem;">Learning Path Recommendations</h2>
+            
+            <div class="recommendations-grid">
+                <div class="recommendation-card">
+                    <h3 class="rec-category">📊 Statistics & Math</h3>
+                    <ul class="rec-list">
+                        <li class="rec-item">
+                            <span class="rec-name">Statistical Rethinking (McElreath)</span>
+                            <a href="#" class="rec-link">View</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">MIT Linear Algebra (Strang)</span>
+                            <a href="#" class="rec-link">Watch</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">Probability Theory (Jaynes)</span>
+                            <a href="#" class="rec-link">Read</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">Khan Academy Calculus</span>
+                            <a href="#" class="rec-link">Learn</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-card">
+                    <h3 class="rec-category">🤖 Machine Learning</h3>
+                    <ul class="rec-list">
+                        <li class="rec-item">
+                            <span class="rec-name">Fast.ai Practical Deep Learning</span>
+                            <a href="#" class="rec-link">Course</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">Stanford CS229 (Ng)</span>
+                            <a href="#" class="rec-link">Watch</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">Hands-On ML (Géron)</span>
+                            <a href="#" class="rec-link">Book</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">Kaggle Learn</span>
+                            <a href="#" class="rec-link">Practice</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-card">
+                    <h3 class="rec-category">📈 Data Analysis</h3>
+                    <ul class="rec-list">
+                        <li class="rec-item">
+                            <span class="rec-name">Python for Data Analysis (McKinney)</span>
+                            <a href="#" class="rec-link">Read</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">Storytelling with Data (Nussbaumer)</span>
+                            <a href="#" class="rec-link">Book</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">R for Data Science</span>
+                            <a href="#" class="rec-link">Learn</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">Mode Analytics SQL Tutorial</span>
+                            <a href="#" class="rec-link">Practice</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-card">
+                    <h3 class="rec-category">🛠️ Tools & Frameworks</h3>
+                    <ul class="rec-list">
+                        <li class="rec-item">
+                            <span class="rec-name">PyTorch Tutorials</span>
+                            <a href="#" class="rec-link">Official</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">TensorFlow Developer Cert</span>
+                            <a href="#" class="rec-link">Certify</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">Docker Mastery</span>
+                            <a href="#" class="rec-link">Course</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">AWS ML Specialty</span>
+                            <a href="#" class="rec-link">Prepare</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-card">
+                    <h3 class="rec-category">🎯 ML/AI Career Path</h3>
+                    <ul class="rec-list">
+                        <li class="rec-item">
+                            <span class="rec-name">1. Master Python & SQL</span>
+                            <a href="#" class="rec-link">Start</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">2. Learn Stats & Math Foundations</span>
+                            <a href="#" class="rec-link">Build</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">3. Complete ML Projects</span>
+                            <a href="#" class="rec-link">Practice</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">4. Deploy to Production</span>
+                            <a href="#" class="rec-link">Ship</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-card">
+                    <h3 class="rec-category">📚 General Learning</h3>
+                    <ul class="rec-list">
+                        <li class="rec-item">
+                            <span class="rec-name">Coursera Specializations</span>
+                            <a href="#" class="rec-link">Explore</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">arXiv ML Papers</span>
+                            <a href="#" class="rec-link">Read</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">Towards Data Science Blog</span>
+                            <a href="#" class="rec-link">Follow</a>
+                        </li>
+                        <li class="rec-item">
+                            <span class="rec-name">Papers with Code</span>
+                            <a href="#" class="rec-link">Implement</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tools Modal -->
+    <div class="modal-overlay" id="toolsModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('tools')">×</button>
+            <h2 class="section-title" style="font-size: 2rem; margin-bottom: 2rem;">Essential Data Science Tools</h2>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🐍</div>
+                    <div class="tool-name-label">Jupyter Lab</div>
+                    <div class="tool-category">Interactive Computing</div>
+                    <a href="https://jupyter.org/" class="tool-link" target="_blank">Visit Site</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📊</div>
+                    <div class="tool-name-label">Pandas</div>
+                    <div class="tool-category">Data Manipulation</div>
+                    <a href="https://pandas.pydata.org/" class="tool-link" target="_blank">Docs</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🔥</div>
+                    <div class="tool-name-label">PyTorch</div>
+                    <div class="tool-category">Deep Learning</div>
+                    <a href="https://pytorch.org/" class="tool-link" target="_blank">Get Started</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🧮</div>
+                    <div class="tool-name-label">NumPy</div>
+                    <div class="tool-category">Numerical Computing</div>
+                    <a href="https://numpy.org/" class="tool-link" target="_blank">Learn</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">📈</div>
+                    <div class="tool-name-label">Scikit-learn</div>
+                    <div class="tool-category">Machine Learning</div>
+                    <a href="https://scikit-learn.org/" class="tool-link" target="_blank">Explore</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🎨</div>
+                    <div class="tool-name-label">Plotly</div>
+                    <div class="tool-category">Visualization</div>
+                    <a href="https://plotly.com/" class="tool-link" target="_blank">View</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">☁️</div>
+                    <div class="tool-name-label">Google Colab</div>
+                    <div class="tool-category">Cloud Notebooks</div>
+                    <a href="https://colab.research.google.com/" class="tool-link" target="_blank">Launch</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🐙</div>
+                    <div class="tool-name-label">GitHub</div>
+                    <div class="tool-category">Version Control</div>
+                    <a href="https://github.com/" class="tool-link" target="_blank">Code</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🗄️</div>
+                    <div class="tool-name-label">PostgreSQL</div>
+                    <div class="tool-category">Database</div>
+                    <a href="https://www.postgresql.org/" class="tool-link" target="_blank">Download</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🚀</div>
+                    <div class="tool-name-label">FastAPI</div>
+                    <div class="tool-category">API Framework</div>
+                    <a href="https://fastapi.tiangolo.com/" class="tool-link" target="_blank">Build</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">🐳</div>
+                    <div class="tool-name-label">Docker</div>
+                    <div class="tool-category">Containerization</div>
+                    <a href="https://www.docker.com/" class="tool-link" target="_blank">Deploy</a>
+                </div>
+
+                <div class="tool-card">
+                    <div class="tool-icon">☁️</div>
+                    <div class="tool-name-label">AWS SageMaker</div>
+                    <div class="tool-category">ML Platform</div>
+                    <a href="https://aws.amazon.com/sagemaker/" class="tool-link" target="_blank">Cloud ML</a>
+                </div>
+
+                <!-- Add more tools here -->
+            </div>
+        </div>
+    </div>
 
     <script>
-        // Theme Toggle
-        function toggleTheme() {
-            const body = document.body;
-            const dial = document.querySelector('.dial');
-            const modeLabel = document.querySelector('.theme-mode');
-            
-            if (body.classList.contains('dark')) {
-                body.classList.remove('dark');
-                body.classList.add('light');
-                dial.classList.add('rotated');
-                modeLabel.textContent = 'LIGHT';
-            } else {
-                body.classList.remove('light');
-                body.classList.add('dark');
-                dial.classList.remove('rotated');
-                modeLabel.textContent = 'VOID';
+        // Sidebar Toggle
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebarToggle.classList.toggle('active');
+            sidebar.classList.toggle('active');
+            mainContent.classList.toggle('sidebar-open');
+        });
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target) && sidebar.classList.contains('active')) {
+                sidebarToggle.classList.remove('active');
+                sidebar.classList.remove('active');
+                mainContent.classList.remove('sidebar-open');
+            }
+        });
+
+        // Modal Functions
+        function openModal(modalName) {
+            const modal = document.getElementById(modalName + 'Modal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Initialize confidence radar chart when opening that modal
+                if (modalName === 'confidenceRate' && !window.confidenceChartInitialized) {
+                    initConfidenceRadar();
+                    window.confidenceChartInitialized = true;
+                }
             }
         }
 
-        // Glitch Effect
-        function triggerGlitch() {
-            const heroName = document.getElementById('heroName');
-            heroName.classList.add('glitch-active');
-            setTimeout(() => {
-                heroName.classList.remove('glitch-active');
-            }, 600);
-        }
-
-        // Trigger glitch every 5 seconds
-        setInterval(triggerGlitch, 5000);
-
-        // Initial glitch after 1 second
-        setTimeout(triggerGlitch, 1000);
-    </script>
-</body>
-</html>
-         const modeLabel = document.querySelector('.theme-mode');
-            
-            if (body.classList.contains('dark')) {
-                body.classList.remove('dark');
-                body.classList.add('light');
-                dial.classList.add('rotated');
-                modeLabel.textContent = 'LIGHT';
-            } else {
-                body.classList.remove('light');
-                body.classList.add('dark');
-                dial.classList.remove('rotated');
-                modeLabel.textContent = 'VOID';
+        function closeModal(modalName) {
+            const modal = document.getElementById(modalName + 'Modal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
             }
         }
 
-        // Glitch Effect
-        function triggerGlitch() {
-            const heroName = document.getElementById('heroName');
-            heroName.classList.add('glitch-active');
-            setTimeout(() => {
-                heroName.classList.remove('glitch-active');
-            }, 600);
+        // Close modal when clicking overlay
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
+        // Initialize Skills Radar Chart
+        const ctx = document.getElementById('skillsRadar').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: [
+                    'Machine Learning',
+                    'Statistical Modeling',
+                    'Data Engineering',
+                    'Visualization',
+                    'Deployment',
+                    'Cloud Infrastructure',
+                    'Python/Programming',
+                    'Mathematical Foundation'
+                ],
+                datasets: [{
+                    label: 'Skill Level',
+                    data: [95, 92, 88, 90, 85, 82, 98, 93],
+                    fill: true,
+                    backgroundColor: 'rgba(255, 184, 0, 0.2)',
+                    borderColor: '#FFB800',
+                    pointBackgroundColor: '#FFB800',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#FFB800',
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            stepSize: 20,
+                            color: '#9CA3AF',
+                            backdropColor: 'transparent'
+                        },
+                        grid: {
+                            color: 'rgba(255, 184, 0, 0.1)'
+                        },
+                        pointLabels: {
+                            color: '#F9FAFB',
+                            font: {
+                                size: 12,
+                                family: "'IBM Plex Mono', monospace"
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Initialize Confidence Radar Chart
+        function initConfidenceRadar() {
+            const ctx2 = document.getElementById('confidenceRadar').getContext('2d');
+            new Chart(ctx2, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        'Statistics',
+                        'Linear Algebra',
+                        'Calculus',
+                        'Python',
+                        'Regression',
+                        'Model Building',
+                        'TensorFlow',
+                        'Pandas/NumPy',
+                        'Project Mgmt',
+                        'Deep Learning'
+                    ],
+                    datasets: [{
+                        label: 'Confidence Level (%)',
+                        data: [95, 92, 90, 98, 97, 95, 94, 96, 88, 93],
+                        fill: true,
+                        backgroundColor: 'rgba(255, 140, 66, 0.2)',
+                        borderColor: '#FF8C42',
+                        pointBackgroundColor: '#FF8C42',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#FF8C42',
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20,
+                                color: '#9CA3AF',
+                                backdropColor: 'transparent'
+                            },
+                            grid: {
+                                color: 'rgba(255, 140, 66, 0.1)'
+                            },
+                            pointLabels: {
+                                color: '#F9FAFB',
+                                font: {
+                                    size: 13,
+                                    family: "'IBM Plex Mono', monospace"
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
         }
 
-        // Trigger glitch every 5 seconds
-        setInterval(triggerGlitch, 5000);
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
-        // Initial glitch after 1 second
-        setTimeout(triggerGlitch, 1000);
+        // Intersection Observer for Fade-in Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Counter Animation
+        const animateCounter = (el) => {
+            const target = el.textContent.replace(/[^0-9.]/g, '');
+            const isDecimal = target.includes('.');
+            const targetNum = parseFloat(target);
+            const duration = 2000;
+            const increment = targetNum / (duration / 16);
+            let current = 0;
+
+            const updateCounter = () => {
+                current += increment;
+                if (current < targetNum) {
+                    el.textContent = isDecimal ? current.toFixed(1) + (el.textContent.includes('%') ? '%' : '') : Math.floor(current) + '+';
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    el.textContent = target + (el.textContent.includes('%') ? '%' : el.textContent.includes('+') ? '+' : '');
+                }
+            };
+
+            updateCounter();
+        };
+
+        const metricsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const metricNumber = entry.target.querySelector('.metric-number');
+                    if (metricNumber && !metricNumber.classList.contains('animated')) {
+                        metricNumber.classList.add('animated');
+                        animateCounter(metricNumber);
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.metric-card').forEach(card => metricsObserver.observe(card));
+
+        // Contact Form
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Message sent! I\'ll get back to you soon.');
+            this.reset();
+        });
+
+        // Download CV
+        document.getElementById('downloadCV').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('CV download - Connect this to your actual CV file!');
+            // window.location.href = 'path/to/your/cv.pdf';
+        });
+
+        // Active Nav Link
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-center a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.color = '';
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.style.color = 'var(--sunshine)';
+                }
+            });
+        });
     </script>
 </body>
 </html>
