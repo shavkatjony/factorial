@@ -1206,7 +1206,7 @@
                 </button>
 
                 <button class="sidebar-btn" onclick="openModal('tools')">
-                    <span>🛠️ Essential Tools</span>
+                    <span>🛠️ My Tools</span>
                     <span class="sidebar-btn-icon">→</span>
                 </button>
             </div>
@@ -1217,7 +1217,7 @@
     <main id="mainContent">
         <!-- Hero Section -->
         <section id="home" class="hero">
-            <h1 class="hero-title">DATA SCIENTIST &<br>ML SYSTEMS ENGINEER</h1>
+            <h1 class="hero-title">DATA ANALYST &<br>ML SYSTEMS ENGINEER</h1>
             <p class="hero-subtitle">Building Intelligent Systems • Production ML • Analytics</p>
             
             <div class="cta-buttons">
